@@ -2,6 +2,26 @@ const counterDiv = document.getElementById("counterDiv");
 const incrementBtn = document.getElementById("incrementBtn");
 const decrementBtn = document.getElementById("decrementBtn");
 
+// action identifier
+const INCREMENT = "increment";
+const DECREMENT = "decrement";
+
+// action creators
+
+const increment = (value) => {
+  return {
+    type: INCREMENT, // mandatory
+    payload: value,
+  };
+};
+
+const decrement = (value) => {
+  return {
+    type: DECREMENT, // mandatory
+    payload: value,
+  };
+};
+
 // create initial state
 const initialState = {
   value: 0,
@@ -9,10 +29,10 @@ const initialState = {
 
 // create reducer function
 const counterReducer = (state = initialState, action) => {
-  if (action.type === "increment") {
-    return { ...state, value: state.value + 1 };
-  } else if (action.type === "decrement") {
-    return { ...state, value: state.value - 1 };
+  if (action.type === INCREMENT) {
+    return { ...state, value: state.value + action.payload };
+  } else if (action.type === DECREMENT) {
+    return { ...state, value: state.value - action.payload };
   } else {
     return state;
   }
@@ -36,13 +56,9 @@ store.subscribe(render);
 // button eventListener
 
 incrementBtn.addEventListener("click", () => {
-  store.dispatch({
-    type: "increment",
-  });
+  store.dispatch(increment(5));
 });
 
 decrementBtn.addEventListener("click", () => {
-  store.dispatch({
-    type: "decrement",
-  });
+  store.dispatch(decrement(2));
 });
